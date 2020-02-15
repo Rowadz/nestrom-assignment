@@ -9,6 +9,7 @@ import { Movie } from 'src/movies/movies.schema';
 export class ActorsService {
   constructor(
     @InjectModel('Actors') private readonly actrosModel: Model<Actor>,
+    @InjectModel('Movies') private readonly moviesModel: Model<Movie>,
   ) {}
 
   async findAll(): Promise<Partial<Array<Actor>>> {
@@ -28,7 +29,17 @@ export class ActorsService {
 
   async delete(id: string): Promise<Actor> {
     const a: Actor = await this.actrosModel.findById({ _id: new ObjectID(id) });
-    this.actrosModel.deleteOne({ _id: new ObjectID(id) });
+    this.delMovieRef(id).then(() => {
+      this.actrosModel.deleteOne({ _id: new ObjectID(id) });
+    });
     return a;
+  }
+
+  private async delMovieRef(actorId: string): Promise<void> {
+    const id = new ObjectID(actorId);
+    this.moviesModel
+      .updateMany({ actors: { $in: [id] } }, { $pullAll: { actors: [id] } })
+      .exec()
+      .catch(console.error);
   }
 }

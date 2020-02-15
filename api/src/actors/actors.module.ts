@@ -8,9 +8,12 @@ import { MoviesSchema } from 'src/movies/movies.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'Actors', schema: ActorsSchema }]),
+    MongooseModule.forFeature([
+      { name: 'Actors', schema: ActorsSchema },
+      { name: 'Movies', schema: MoviesSchema },
+    ]),
   ],
   controllers: [ActorsController],
-  providers: [ActorsService],
+  providers: [ActorsService, MoviesService],
 })
 export class ActorsModule {}
