@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MoviesModule } from './movies/movies.module';
 import { ActorsModule } from './actors/actors.module';
+import { DirectorsModule } from './directors/directors.module';
 
 // mongodb+srv://admin:admin_123@nestrom-playground1-hofdl.mongodb.net/test?retryWrites=true&w=majority
 @Module({
@@ -15,6 +16,7 @@ import { ActorsModule } from './actors/actors.module';
     }),
     MoviesModule,
     ActorsModule,
+    DirectorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

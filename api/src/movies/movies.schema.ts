@@ -22,7 +22,7 @@ export const MoviesSchema = new Schema(
     aspect_ratio: String,
     movie_facebook_likes: Number,
     actors: [ObjectID],
-    director: String,
+    director: ObjectID,
     color: String,
   },
   { _id: true },
@@ -47,6 +47,6 @@ export interface Movie extends Mong {
   aspect_ratio: string;
   movie_facebook_likes: number;
   actors: Array<ObjectID>;
-  director: string;
+  director: ObjectID;
   color: string;
 }
