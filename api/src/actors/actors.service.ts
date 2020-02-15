@@ -29,9 +29,13 @@ export class ActorsService {
 
   async delete(id: string): Promise<Actor> {
     const a: Actor = await this.actrosModel.findById({ _id: new ObjectID(id) });
-    this.delMovieRef(id).then(() => {
-      this.actrosModel.deleteOne({ _id: new ObjectID(id) });
-    });
+    this.delMovieRef(id)
+      .then(() => {
+        this.actrosModel
+          .deleteOne({ _id: new ObjectID(id) })
+          .catch(console.error);
+      })
+      .catch(console.error);
     return a;
   }
 
