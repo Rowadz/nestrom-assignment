@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MoviesModule } from './movies/movies.module';
+import { ActorsModule } from './actors/actors.module';
 
 // mongodb+srv://admin:admin_123@nestrom-playground1-hofdl.mongodb.net/test?retryWrites=true&w=majority
 @Module({
@@ -13,6 +14,7 @@ import { MoviesModule } from './movies/movies.module';
       useUnifiedTopology: true,
     }),
     MoviesModule,
+    ActorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

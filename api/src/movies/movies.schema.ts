@@ -1,28 +1,32 @@
-import { Schema, Document } from 'mongoose';
+import { Schema, Document, Types } from 'mongoose';
 import { Mong } from 'src/generic/generic.interface';
-
-export const MoviesSchema = new Schema({
-  title: String,
-  duration: Number,
-  gross: Number,
-  genres: Array,
-  num_voted_users: Number,
-  cast_total_facebook_likes: Number,
-  plot_keywords: Array,
-  imdb_link: String,
-  num_user_for_reviews: Number,
-  language: String,
-  country: String,
-  content_rating: String,
-  budget: Number,
-  title_year: String,
-  imdb_score: String,
-  aspect_ratio: String,
-  movie_facebook_likes: Number,
-  actors: Array,
-  director: String,
-  color: String,
-});
+import { Actor, ActorsSchema } from 'src/actors/actors.schema';
+import { ObjectID } from 'mongodb';
+export const MoviesSchema = new Schema(
+  {
+    title: String,
+    duration: Number,
+    gross: Number,
+    genres: Array,
+    num_voted_users: Number,
+    cast_total_facebook_likes: Number,
+    plot_keywords: Array,
+    imdb_link: String,
+    num_user_for_reviews: Number,
+    language: String,
+    country: String,
+    content_rating: String,
+    budget: Number,
+    title_year: String,
+    imdb_score: String,
+    aspect_ratio: String,
+    movie_facebook_likes: Number,
+    actors: [ObjectID],
+    director: String,
+    color: String,
+  },
+  { _id: true },
+);
 
 export interface Movie extends Mong {
   title: string;
@@ -42,7 +46,7 @@ export interface Movie extends Mong {
   imdb_score: string;
   aspect_ratio: string;
   movie_facebook_likes: number;
-  actors: Array<string>;
+  actors: Array<ObjectID>;
   director: string;
   color: string;
 }
