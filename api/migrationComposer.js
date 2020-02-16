@@ -14,17 +14,6 @@ module.exports = class MigrationComposer extends MongoClient {
     this.directorKeys = ['director_name', 'director_facebook_likes'];
   }
 
-  async _con(calback) {
-    this.connect(async (err, client) => {
-      console.log('Connected successfully to server');
-      client.db('nestrom');
-      if (calback) {
-        await calback();
-      }
-      client.close();
-    });
-  }
-
   /**
    * @param {*} data
    * @param {string} collection
@@ -62,7 +51,7 @@ module.exports = class MigrationComposer extends MongoClient {
     for (const obj of csvData) {
       if (!moviesKeys) {
         moviesKeys = Object.keys(obj).filter(
-          k => !this.actorKeys.includes(k) && this.directorKeys.includes(k),
+          k => !this.actorKeys.includes(k) && !this.directorKeys.includes(k),
         );
       }
       const manyActors = this._mapActorsObj(
@@ -78,32 +67,28 @@ module.exports = class MigrationComposer extends MongoClient {
       directors.push(...manyDirectors.filter(filter));
 
       movies.push(
-        ...this._mapActorsObj(
-          this._buildObjByKeys({ ...obj }, moviesKeys, (obj, key) => {
-            if (key === 'genres' || key === 'plot_keywords') {
-              return obj[key].split('|');
-            }
-          }),
-        ),
+        this._buildObjByKeys({ ...obj }, moviesKeys, (obj, key) => {
+          if (key === 'genres' || key === 'plot_keywords') {
+            return obj[key].split('|');
+          } else return obj[key];
+        }),
       );
     }
-    console.log(directors);
 
-    await this._con(async () =>
-      this.insert(actors, 'actors').catch(console.error),
-    );
-    await this._con(async () =>
-      this.insert(directors, 'directors').catch(console.error),
-    );
-    // await this._con(async () =>
-    //   this.insert(movies, 'movies').catch(console.error),
-    // );
-    this.client.close();
+    this.connect(async (_, client) => {
+      if (!this._myDB) {
+        this._myDB = client.db('nestrom');
+      }
+      await this.insert(directors, 'directors');
+      await this.insert(actors, 'actors');
+      await this.insert(movies, 'movies');
+      this.close();
+    });
   }
 
   _buildObjByKeys(obj, keys, cb) {
     const newObj = {};
-    keys.forEach(key => (newObj[key] = cb ? cb(obj, obj[key]) : obj[key]));
+    keys.forEach(key => (newObj[key] = cb ? cb(obj, key) : obj[key]));
     return newObj;
   }
 
