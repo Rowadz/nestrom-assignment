@@ -33,4 +33,4 @@ $ node migration.js
 ```
 
 
-**don't worry the code dose not include any sensitive information**
+**don't worry the code does not include any sensitive information**
