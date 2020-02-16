@@ -1,13 +1,13 @@
 # nestrom-assignment
 
 The steps and status :
-* 1.Create a NodeJS server with any framework you want, we prefer to use hapi but it’s optional. ( DONE )
-* 2. Connect to MongoDB cloud storage using one of the following connection strings ( I ran everything locally ) ( NOT DONE )
-* 3. Create movie, actor and director mongoose schemas with the following ( DONE )
-* 4. Create CRUDs RESTful APIs for all schemas mentioned above. ( DONE )
-* 5. Create a script to insert datasets in the attached CSV file ( I inserted the movie - actors - director into the DB but didn't link them ...)
-* 6. Link MongoDB with Elasticsearch using one of the following modules: ( NOT DONE )
-* 7. Using elasticsearch, Create the following routes: ( NOT DONE )
+* Create a NodeJS server with any framework you want, we prefer to use hapi but it’s optional. ( DONE )
+* Connect to MongoDB cloud storage using one of the following connection strings ( I ran everything locally ) ( NOT DONE )
+* Create movie, actor and director mongoose schemas with the following ( DONE )
+* Create CRUDs RESTful APIs for all schemas mentioned above. ( DONE )
+* Create a script to insert datasets in the attached CSV file ( I inserted the movie - actors - director into the DB but didn't link them ...)
+* Link MongoDB with Elasticsearch using one of the following modules: ( NOT DONE )
+* Using elasticsearch, Create the following routes: ( NOT DONE )
 
 
 #### How to run the api ( I used NestJs ) 
